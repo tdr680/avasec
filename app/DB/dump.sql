@@ -62,3 +62,17 @@ INSERT INTO `user_ver` (`id`, `user_id`, `name`) VALUES
 (4, 4, 'Hector Salamanca'),
 (6, 2, 'Jesse Pinkman'),
 (7, 4, 'Tuco Salamanca');
+
+
+-----------------
+
+create view user_ver_v 
+    as 
+select max(id) ver_id, user_id 
+  from user_ver 
+ group by user_id;
+
+select u.*, uv.* 
+  from user u 
+  join user_ver_v v on u.id = v.user_id 
+  join user_ver uv on uv.id = v.ver_id;
