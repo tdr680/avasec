@@ -72,7 +72,10 @@ select max(id) ver_id, user_id
   from user_ver 
  group by user_id;
 
-select u.*, uv.* 
-  from user u 
-  join user_ver_v v on u.id = v.user_id 
-  join user_ver uv on uv.id = v.ver_id;
+create view user_v 
+    as 
+SELECT u.id, u.login, uv.id ver_id, uv.name
+FROM user u
+JOIN user_ver_v v ON u.id = v.user_id
+JOIN user_ver uv ON uv.id = v.ver_id;
+
