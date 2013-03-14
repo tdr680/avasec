@@ -141,17 +141,18 @@ CREATE TABLE IF NOT EXISTS `user_ver_v` (
 -- --------------------------------------------------------
 
 --
--- Structure for view `user_v`
---
-DROP TABLE IF EXISTS `user_v`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `user_v` AS select `u`.`id` AS `id`,`u`.`login` AS `login`,`uv`.`id` AS `user_ver_id`,`uv`.`name` AS `name` from ((`user` `u` join `user_ver_v` `v` on((`u`.`id` = `v`.`user_id`))) join `user_ver` `uv` on((`uv`.`id` = `v`.`ver_id`)));
-
--- --------------------------------------------------------
-
---
 -- Structure for view `user_ver_v`
 --
 DROP TABLE IF EXISTS `user_ver_v`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`avasec`@`localhost` SQL SECURITY DEFINER VIEW `user_ver_v` AS select max(`user_ver`.`id`) AS `user_ver_id`,`user_ver`.`user_id` AS `user_id` from `user_ver` group by `user_ver`.`user_id`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `user_v`
+--
+DROP TABLE IF EXISTS `user_v`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `user_v` AS select `u`.`id` AS `id`,`u`.`login` AS `login`,`uv`.`id` AS `user_ver_id`,`uv`.`name` AS `name` from ((`user` `u` join `user_ver_v` `v` on((`u`.`id` = `v`.`user_id`))) join `user_ver` `uv` on((`uv`.`id` = `v`.`user_ver_id`)));
+
