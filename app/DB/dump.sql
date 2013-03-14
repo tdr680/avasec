@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 14, 2013 at 09:53 PM
+-- Generation Time: Mar 14, 2013 at 10:45 PM
 -- Server version: 5.1.67
 -- PHP Version: 5.3.6-13ubuntu3.9
 
@@ -20,6 +20,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `team`
 --
 
+DROP TABLE IF EXISTS `team`;
 CREATE TABLE IF NOT EXISTS `team` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(80) COLLATE latin1_general_cs NOT NULL,
@@ -42,6 +43,7 @@ INSERT INTO `team` (`id`, `name`) VALUES
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(40) COLLATE latin1_general_cs NOT NULL,
@@ -65,6 +67,7 @@ INSERT INTO `user` (`id`, `login`) VALUES
 -- Table structure for table `user_team`
 --
 
+DROP TABLE IF EXISTS `user_team`;
 CREATE TABLE IF NOT EXISTS `user_team` (
   `team_id` int(11) NOT NULL,
   `user_ver_id` int(11) NOT NULL,
@@ -91,6 +94,7 @@ INSERT INTO `user_team` (`team_id`, `user_ver_id`) VALUES
 --
 -- Stand-in structure for view `user_v`
 --
+DROP VIEW IF EXISTS `user_v`;
 CREATE TABLE IF NOT EXISTS `user_v` (
 `id` int(11)
 ,`login` varchar(40)
@@ -103,6 +107,7 @@ CREATE TABLE IF NOT EXISTS `user_v` (
 -- Table structure for table `user_ver`
 --
 
+DROP TABLE IF EXISTS `user_ver`;
 CREATE TABLE IF NOT EXISTS `user_ver` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -128,6 +133,7 @@ INSERT INTO `user_ver` (`id`, `user_id`, `name`) VALUES
 --
 -- Stand-in structure for view `user_ver_v`
 --
+DROP VIEW IF EXISTS `user_ver_v`;
 CREATE TABLE IF NOT EXISTS `user_ver_v` (
 `ver_id` int(11)
 ,`user_id` int(11)
@@ -139,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `user_ver_v` (
 --
 DROP TABLE IF EXISTS `user_v`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `user_v` AS select `u`.`id` AS `id`,`u`.`login` AS `login`,`uv`.`id` AS `ver_id`,`uv`.`name` AS `name` from ((`user` `u` join `user_ver_v` `v` on((`u`.`id` = `v`.`user_id`))) join `user_ver` `uv` on((`uv`.`id` = `v`.`ver_id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `user_v` AS select `u`.`id` AS `id`,`u`.`login` AS `login`,`uv`.`id` AS `user_ver_id`,`uv`.`name` AS `name` from ((`user` `u` join `user_ver_v` `v` on((`u`.`id` = `v`.`user_id`))) join `user_ver` `uv` on((`uv`.`id` = `v`.`ver_id`)));
 
 -- --------------------------------------------------------
 
@@ -148,4 +154,4 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `user_ver_v`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`avasec`@`localhost` SQL SECURITY DEFINER VIEW `user_ver_v` AS select max(`user_ver`.`id`) AS `ver_id`,`user_ver`.`user_id` AS `user_id` from `user_ver` group by `user_ver`.`user_id`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`avasec`@`localhost` SQL SECURITY DEFINER VIEW `user_ver_v` AS select max(`user_ver`.`id`) AS `user_ver_id`,`user_ver`.`user_id` AS `user_id` from `user_ver` group by `user_ver`.`user_id`;
