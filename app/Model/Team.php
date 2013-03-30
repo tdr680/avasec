@@ -6,6 +6,12 @@ App::uses('AppModel', 'Model');
  */
 class Team extends AppModel {
 
+  public $validate = array(
+                           'name' => array(
+                                           'rule'   => 'notEmpty'
+                                           )
+                           );
+
   public $hasAndBelongsToMany = array(
                                       'Member' => array(
                                                         'className'              => 'User',
