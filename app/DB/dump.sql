@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 17, 2013 at 10:46 PM
+-- Generation Time: Mar 31, 2013 at 08:36 PM
 -- Server version: 5.1.67
 -- PHP Version: 5.3.6-13ubuntu3.9
 
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `team` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(80) COLLATE latin1_general_cs NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `team`
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `login` varchar(40) COLLATE latin1_general_cs NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `user`
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `user_team` (
   `team_id` int(11) NOT NULL,
   `user_ver_id` int(11) NOT NULL,
   UNIQUE KEY `idx_user_team` (`team_id`,`user_ver_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
 
 --
 -- Dumping data for table `user_team`
@@ -81,13 +81,18 @@ CREATE TABLE IF NOT EXISTS `user_team` (
 INSERT INTO `user_team` (`team_id`, `user_ver_id`) VALUES
 (1, 2),
 (1, 6),
+(1, 26),
 (2, 2),
 (2, 6),
+(2, 26),
+(2, 27),
 (3, 1),
 (3, 4),
 (3, 7),
 (4, 1),
-(4, 7);
+(4, 7),
+(4, 26),
+(4, 27);
 
 -- --------------------------------------------------------
 
@@ -125,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `user_ver` (
   `name` varchar(80) COLLATE latin1_general_cs NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=28 ;
 
 --
 -- Dumping data for table `user_ver`
@@ -137,7 +142,9 @@ INSERT INTO `user_ver` (`id`, `user_id`, `name`) VALUES
 (3, 3, 'Hank Schrader'),
 (4, 4, 'Hector Salamanca'),
 (6, 2, 'Jesse Pinkman'),
-(7, 4, 'Tuco Salamanca');
+(7, 4, 'Tuco Salamanca'),
+(26, 2, 'Jesse Pinkman'),
+(27, 2, 'Jesse Pinkman (w/o team_1)');
 
 -- --------------------------------------------------------
 

@@ -9,7 +9,7 @@ echo $this->Form->create('User');
 echo $user['User']['id']    .'</br>';
 echo $user['User']['login'] .'</br>';
 echo $user['User']['name']  .'</br>';
-echo $this->Form->input('name');
+echo $this->Form->input('name', array('default' => $user['User']['name']));
 
 //echo $this->Form->checkbox('jinej_input');
 

@@ -1,6 +1,8 @@
 <!-- File: /app/View/Users/view.ctp -->
 
-<h1><?php echo h($user['User']['login']); ?></h1>
+<h1><?php echo h($user['User']['login']); ?>
+ (<?php echo $this->Html->link(__('Modify'), array('action' => 'edit', $user['User']['id'])); ?>)
+</h1>
 
 <p><small>Version: <?php echo $user['User']['user_ver_id']; ?></small></p>
 
