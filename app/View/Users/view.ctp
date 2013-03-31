@@ -15,7 +15,10 @@
   <?php foreach ($user_ver as $uv): ?>
   <tr>
     <td><?php echo $uv['UserVer']['id'];   ?></td>
-    <td><?php echo $uv['UserVer']['name']; ?></td>
+    <td>
+      <?php echo $this->Html->link($uv['UserVer']['name'],
+      array('controller'=>'users', 'action'=>'ver', $uv['UserVer']['id'])); ?>
+    </td>
   <?php endforeach; ?>
   <?php unset($uv); ?>
 </table>

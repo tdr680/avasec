@@ -24,9 +24,22 @@ class UsersController extends AppController {
     }
     $this->set('user', $user);
 
-    $user_ver = $this->UserVer->find('all', array('conditions'=>array('user_id'=>$id)));
+    $user_ver = $this->UserVer->find('all', array('conditions'=>array('user_id'=>$id),
+                                                  'order'=>array('UserVer.id desc')));
     $this->set('user_ver', $user_ver);
   }  
+
+  public function ver($id = null) {
+    if (!$id) {
+      throw new NotFoundException(__('Invalid user version'));
+    }
+
+    $user_ver = $this->UserVer->findById($id);
+    if (!$user_ver) {
+      throw new NotFoundException(__('Invalid user version'));
+    }
+    $this->set('uv', $user_ver);
+  }
 
   public function add() {
     $data = $this->request->data;

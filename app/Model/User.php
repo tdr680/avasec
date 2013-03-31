@@ -24,6 +24,11 @@ class User extends AppModel {
                                                       )
                                       );
 
+  public $hasMany = array(
+                          'UserVer' => array(
+                                             'foreignKey' => 'user_id'
+                                             ));
+
   var $useTable = 'user_v';
 
 /**
