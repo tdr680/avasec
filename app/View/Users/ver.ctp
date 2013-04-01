@@ -7,8 +7,14 @@ array('controller'=>'users', 'action'=>'view', $uv['User']['id'])); ?>
 
 <h1><?php echo h($uv['User']['id']); ?></h1>
 
-<p><small>Version: <?php echo $uv['UserVer']['id']; ?></small></p>
-
+<h1>Version: <?php echo $uv['UserVer']['id']; ?>
+ (<?php 
+  echo $this->Form->postLink(__('Remove'), 
+                             array('action' => 'rever', $uv['UserVer']['id']),
+                             array('confirm' => 'Are you sure?')
+                             ); 
+ ?>)
+</h1>
 <p><?php echo h($uv['UserVer']['name']); ?></p>
 
 <h1>Teams</h1>

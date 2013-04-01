@@ -41,6 +41,21 @@ class UsersController extends AppController {
     $this->set('uv', $user_ver);
   }
 
+  public function rever($id = null) {
+    if (!$id) {
+      throw new NotFoundException(__('Invalid user version'));
+    }
+
+    if (!$this->request->is('post')) {
+      throw new MethodNotAllowedException();
+    }
+
+    if ($this->UserVer->delete($id)) {
+        $this->Session->setFlash('The user version: ' . $id . ' has been deleted.');
+        $this->redirect(array('action' => 'index'));
+    }
+  }
+
   public function add() {
     $data = $this->request->data;
     // pr($data);
