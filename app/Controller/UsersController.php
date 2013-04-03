@@ -126,4 +126,21 @@ class UsersController extends AppController {
 
     }
   }
+
+  public function login() {
+    if ($this->request->is('post')) {
+      $data = $this->request->data;
+      firecake(AuthComponent::password($data['User']['password']));
+
+      if ($this->Auth->login()) {
+        $this->redirect($this->Auth->redirect());
+      } else {
+        $this->Session->setFlash(__('Invalid username or password, try again'));
+      }
+    }
+  }
+
+  public function logout() {
+    $this->redirect($this->Auth->logout());
+  }
 }

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 31, 2013 at 08:36 PM
+-- Generation Time: Apr 03, 2013 at 11:19 PM
 -- Server version: 5.1.67
 -- PHP Version: 5.3.6-13ubuntu3.9
 
@@ -47,6 +47,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(40) COLLATE latin1_general_cs NOT NULL,
+  `password` varchar(40) COLLATE latin1_general_cs NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=21 ;
@@ -55,11 +56,11 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `login`) VALUES
-(1, 'user_1'),
-(2, 'user_2'),
-(3, 'user_3'),
-(4, 'user_4');
+INSERT INTO `user` (`id`, `login`, `password`) VALUES
+(1, 'mrwhite', 'a11963c26efa7187c7f03fe0349ba9ed67d00c39'),
+(2, 'jess', 'a11963c26efa7187c7f03fe0349ba9ed67d00c39'),
+(3, 'dea-hank', 'a11963c26efa7187c7f03fe0349ba9ed67d00c39'),
+(4, 'tuco', 'a11963c26efa7187c7f03fe0349ba9ed67d00c39');
 
 -- --------------------------------------------------------
 
@@ -81,18 +82,13 @@ CREATE TABLE IF NOT EXISTS `user_team` (
 INSERT INTO `user_team` (`team_id`, `user_ver_id`) VALUES
 (1, 2),
 (1, 6),
-(1, 26),
 (2, 2),
 (2, 6),
-(2, 26),
-(2, 27),
 (3, 1),
 (3, 4),
 (3, 7),
 (4, 1),
-(4, 7),
-(4, 26),
-(4, 27);
+(4, 7);
 
 -- --------------------------------------------------------
 
@@ -114,6 +110,8 @@ DROP VIEW IF EXISTS `user_v`;
 CREATE TABLE IF NOT EXISTS `user_v` (
 `id` int(11)
 ,`login` varchar(40)
+,`username` varchar(40)
+,`password` varchar(40)
 ,`user_ver_id` int(11)
 ,`name` varchar(80)
 );
@@ -130,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `user_ver` (
   `name` varchar(80) COLLATE latin1_general_cs NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=30 ;
 
 --
 -- Dumping data for table `user_ver`
@@ -142,9 +140,7 @@ INSERT INTO `user_ver` (`id`, `user_id`, `name`) VALUES
 (3, 3, 'Hank Schrader'),
 (4, 4, 'Hector Salamanca'),
 (6, 2, 'Jesse Pinkman'),
-(7, 4, 'Tuco Salamanca'),
-(26, 2, 'Jesse Pinkman'),
-(27, 2, 'Jesse Pinkman (w/o team_1)');
+(7, 4, 'Tuco Salamanca');
 
 -- --------------------------------------------------------
 
@@ -172,7 +168,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `user_v`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `user_v` AS select `u`.`id` AS `id`,`u`.`login` AS `login`,`uv`.`id` AS `user_ver_id`,`uv`.`name` AS `name` from ((`user` `u` join `user_ver_v` `v` on((`u`.`id` = `v`.`user_id`))) join `user_ver` `uv` on((`uv`.`id` = `v`.`user_ver_id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `user_v` AS select `u`.`id` AS `id`,`u`.`login` AS `login`,`u`.`login` AS `username`,`u`.`password` AS `password`,`uv`.`id` AS `user_ver_id`,`uv`.`name` AS `name` from ((`user` `u` join `user_ver_v` `v` on((`u`.`id` = `v`.`user_id`))) join `user_ver` `uv` on((`uv`.`id` = `v`.`user_ver_id`)));
 
 -- --------------------------------------------------------
 
