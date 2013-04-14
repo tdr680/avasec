@@ -64,6 +64,8 @@ class UsersController extends AppController {
     $ds = $this->UserMod->getDataSource();
     firecake($ds);
 
+    firecake($this->Auth->user('id'));
+
     if ($this->request->is('post')) {
       // -- begin trans
       $ds->begin();

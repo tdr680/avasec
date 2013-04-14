@@ -21,6 +21,8 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
+require_once 'Image/GraphViz.php';
+
 App::uses('Model', 'Model');
 
 /**

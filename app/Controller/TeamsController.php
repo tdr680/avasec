@@ -11,6 +11,7 @@ class TeamsController extends AppController {
   
   public function index() {
     $this->set('teams', $this->Team->find('all'));
+
   }
 
   public function view($id = null) {
@@ -27,7 +28,7 @@ class TeamsController extends AppController {
 
   public function add() {
     $data = $this->request->data;
-    firecake($data);
+    // firecake($data);
     // pr($data);
     // debug($this->request->data);
 
@@ -52,7 +53,7 @@ class TeamsController extends AppController {
       throw new NotFoundException(__('Invalid team'));
     }
 
-    firecake($team);
+    // firecake($team);
 
     if ($this->request->is('post') || $this->request->is('put')) {
       firecake($this->request);
