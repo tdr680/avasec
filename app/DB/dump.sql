@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 14, 2013 at 09:12 PM
+-- Generation Time: Apr 17, 2013 at 10:55 PM
 -- Server version: 5.1.67
 -- PHP Version: 5.3.6-13ubuntu3.9
 
@@ -56,12 +56,9 @@ CREATE TABLE IF NOT EXISTS `acode_entity` (
 INSERT INTO `acode_entity` (`acode_id`, `entity_id`) VALUES
 (1000, 1),
 (1000, 2),
-(1001, 2),
 (1001, 3),
 (1002, 2),
 (1002, 5),
-(1003, 1),
-(1003, 2),
 (1003, 5),
 (1003, 6);
 
@@ -134,7 +131,6 @@ INSERT INTO `role_acode` (`role_id`, `acode_id`) VALUES
 (1, 1001),
 (1, 1002),
 (2, 1000),
-(2, 1001),
 (3, 1001),
 (3, 1002),
 (4, 1003);
@@ -175,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(40) COLLATE latin1_general_cs NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `user`
@@ -184,9 +180,84 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`id`, `login`, `password`) VALUES
 (1, 'mrwhite', 'a11963c26efa7187c7f03fe0349ba9ed67d00c39'),
 (2, 'jess', 'a11963c26efa7187c7f03fe0349ba9ed67d00c39'),
-(3, 'dea-hank', 'a11963c26efa7187c7f03fe0349ba9ed67d00c39'),
-(4, 'tuco', 'a11963c26efa7187c7f03fe0349ba9ed67d00c39');
+(3, 'deahank', 'a11963c26efa7187c7f03fe0349ba9ed67d00c39'),
+(4, 'tuco', 'a11963c26efa7187c7f03fe0349ba9ed67d00c39'),
+(21, 'saul', ''),
+(22, 'gus', '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_acode`
+--
+
+DROP TABLE IF EXISTS `user_acode`;
+CREATE TABLE IF NOT EXISTS `user_acode` (
+  `user_ver_id` int(11) NOT NULL,
+  `acode_id` int(11) NOT NULL,
+  PRIMARY KEY (`user_ver_id`,`acode_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
+
+--
+-- Dumping data for table `user_acode`
+--
+
+INSERT INTO `user_acode` (`user_ver_id`, `acode_id`) VALUES
+(1, 1000),
+(3, 1000),
+(6, 1000);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `user_acode_v`
+--
+DROP VIEW IF EXISTS `user_acode_v`;
+CREATE TABLE IF NOT EXISTS `user_acode_v` (
+`acode_id` int(11)
+,`user_ver_id` int(11)
+,`user_id` int(11)
+);
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_role`
+--
+
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE IF NOT EXISTS `user_role` (
+  `user_ver_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  PRIMARY KEY (`user_ver_id`,`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
+
+--
+-- Dumping data for table `user_role`
+--
+
+INSERT INTO `user_role` (`user_ver_id`, `role_id`) VALUES
+(1, 4),
+(3, 1),
+(6, 3),
+(7, 2),
+(31, 4),
+(34, 2),
+(34, 3),
+(34, 4),
+(37, 1),
+(37, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `user_role_v`
+--
+DROP VIEW IF EXISTS `user_role_v`;
+CREATE TABLE IF NOT EXISTS `user_role_v` (
+`role_id` int(11)
+,`user_ver_id` int(11)
+,`user_id` int(11)
+);
 -- --------------------------------------------------------
 
 --
@@ -209,9 +280,13 @@ INSERT INTO `user_team` (`team_id`, `user_ver_id`) VALUES
 (1, 6),
 (2, 2),
 (2, 6),
+(2, 31),
+(2, 34),
 (3, 1),
 (3, 4),
 (3, 7),
+(3, 31),
+(3, 34),
 (4, 1),
 (4, 7);
 
@@ -253,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `user_ver` (
   `name` varchar(80) COLLATE latin1_general_cs NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=38 ;
 
 --
 -- Dumping data for table `user_ver`
@@ -265,7 +340,11 @@ INSERT INTO `user_ver` (`id`, `user_id`, `name`) VALUES
 (3, 3, 'Hank Schrader'),
 (4, 4, 'Hector Salamanca'),
 (6, 2, 'Jesse Pinkman'),
-(7, 4, 'Tuco Salamanca');
+(7, 4, 'Tuco Salamanca'),
+(31, 21, 'Saul Goodman'),
+(34, 21, 'Saul Goodman'),
+(35, 22, 'Gus Fring'),
+(37, 22, 'Gus Fring');
 
 -- --------------------------------------------------------
 
@@ -277,6 +356,24 @@ CREATE TABLE IF NOT EXISTS `user_ver_v` (
 `user_ver_id` int(11)
 ,`user_id` int(11)
 );
+-- --------------------------------------------------------
+
+--
+-- Structure for view `user_acode_v`
+--
+DROP TABLE IF EXISTS `user_acode_v`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `user_acode_v` AS select `a`.`acode_id` AS `acode_id`,`a`.`user_ver_id` AS `user_ver_id`,`uv`.`user_id` AS `user_id` from (`user_acode` `a` join `user_ver_v` `uv` on((`a`.`user_ver_id` = `uv`.`user_ver_id`)));
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `user_role_v`
+--
+DROP TABLE IF EXISTS `user_role_v`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `user_role_v` AS select `r`.`role_id` AS `role_id`,`r`.`user_ver_id` AS `user_ver_id`,`uv`.`user_id` AS `user_id` from (`user_role` `r` join `user_ver_v` `uv` on((`r`.`user_ver_id` = `uv`.`user_ver_id`)));
+
 -- --------------------------------------------------------
 
 --

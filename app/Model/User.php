@@ -21,7 +21,39 @@ class User extends AppModel {
                                                       'finderQuery'            => '',
                                                       'deleteQuery'            => '',
                                                       'insertQuery'            => ''
-                                                      )
+                                                      ),
+
+                                      'Role' => array(
+                                                      'className'              => 'Role',
+                                                      'joinTable'              => 'user_role_v',
+                                                      'foreignKey'             => 'user_id',
+                                                      'associationForeignKey'  => 'role_id',
+                                                      'unique'                 => true,
+                                                      'conditions'             => '',
+                                                      'fields'                 => '',
+                                                      'order'                  => '',
+                                                      'limit'                  => '',
+                                                      'offset'                 => '',
+                                                      'finderQuery'            => '',
+                                                      'deleteQuery'            => '',
+                                                      'insertQuery'            => ''
+                                                      ),
+
+                                      'Acode' => array(
+                                                       'className'              => 'Acode',
+                                                       'joinTable'              => 'user_acode_v',
+                                                       'foreignKey'             => 'user_id',
+                                                       'associationForeignKey'  => 'acode_id',
+                                                       'unique'                 => true,
+                                                       'conditions'             => '',
+                                                       'fields'                 => '',
+                                                       'order'                  => '',
+                                                       'limit'                  => '',
+                                                       'offset'                 => '',
+                                                       'finderQuery'            => '',
+                                                       'deleteQuery'            => '',
+                                                       'insertQuery'            => ''
+                                                       )
                                       );
 
   public $hasMany = array(

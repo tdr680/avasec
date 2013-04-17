@@ -13,14 +13,24 @@ echo $this->Form->input('name', array('default' => $user['User']['name']));
 
 //echo $this->Form->checkbox('jinej_input');
 
-$selected = array();
+$selected_team = array();
 foreach ($user['Team'] as $tid) {
-  $selected[] = $tid['id'];
+  $selected_team[] = $tid['id'];
 }
 echo $this->Form->input('Team', array('type'      => 'select', 
                                       'multiple'  => 'checkbox',
-                                      'selected'  => $selected
+                                      'selected'  => $selected_team
 ));
+
+$selected_role = array();
+foreach ($user['Role'] as $rid) {
+  $selected_role[] = $rid['id'];
+}
+echo $this->Form->input('Role', array('type'      => 'select', 
+                                      'multiple'  => 'checkbox',
+                                      'selected'  => $selected_role
+));
+
 echo $this->Form->end('Save User');
 ?>
 

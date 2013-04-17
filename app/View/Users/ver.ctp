@@ -34,6 +34,22 @@ array('controller'=>'users', 'action'=>'view', $uv['User']['id'])); ?>
   <?php unset($team); ?>
 </table>
 
+<h1>Roles</h1>
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+  </tr>
+  <?php foreach ($uv['Role'] as $role): ?>
+  <tr>
+    <td><?php echo $role['id'];   ?></td>
+    <td>
+      <?php echo $this->Html->link($role['name'],
+      array('controller'=>'roles', 'action'=>'view', $role['id'])); ?>
+    </td>
+  <?php endforeach; ?>
+  <?php unset($role); ?>
+</table>
 
 <?php
 App::import('Lib', 'DebugKit.FireCake');

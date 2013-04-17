@@ -13,10 +13,16 @@ class UserVer extends AppModel {
                            );
 
   public $belongsTo = 'User';
-  public $hasAndBelongsToMany = array('Team' => 
+  public $hasAndBelongsToMany = array(
+                                      'Team' => 
                                       array(
                                             'className' => 'Team',
-                                            'joinTable' => 'user_team'));
+                                            'joinTable' => 'user_team'),
+                                      'Role' => 
+                                      array(
+                                            'className' => 'Role',
+                                            'joinTable' => 'user_role')
+                                      );
 
   var $useTable = 'user_ver';
 
