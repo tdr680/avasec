@@ -37,6 +37,21 @@ class Acode extends AppModel {
                           'finderQuery'            => '',
                           'deleteQuery'            => '',
                           'insertQuery'            => ''
+                          ),
+          'User' => array(
+                          'className'              => 'User',
+                          'joinTable'              => 'user_acode_v',
+                          'foreignKey'             => 'acode_id',
+                          'associationForeignKey'  => 'user_id',
+                          'unique'                 => true,
+                          'conditions'             => '',
+                          'fields'                 => '',
+                          'order'                  => '',
+                          'limit'                  => '',
+                          'offset'                 => '',
+                          'finderQuery'            => '',
+                          'deleteQuery'            => '',
+                          'insertQuery'            => ''
                           )
           );
 
