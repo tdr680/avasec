@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 17, 2013 at 10:55 PM
+-- Generation Time: May 05, 2013 at 03:47 PM
 -- Server version: 5.1.67
 -- PHP Version: 5.3.6-13ubuntu3.9
 
@@ -23,18 +23,11 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `acode`;
 CREATE TABLE IF NOT EXISTS `acode` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=1004 ;
-
---
--- Dumping data for table `acode`
---
-
-INSERT INTO `acode` (`id`) VALUES
-(1000),
-(1001),
-(1002),
-(1003);
+  `name` varchar(80) COLLATE latin1_general_cs NOT NULL,
+  `charid` varchar(40) COLLATE latin1_general_cs DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `charid_UNIQUE` (`charid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=800386 ;
 
 -- --------------------------------------------------------
 
@@ -45,22 +38,10 @@ INSERT INTO `acode` (`id`) VALUES
 DROP TABLE IF EXISTS `acode_entity`;
 CREATE TABLE IF NOT EXISTS `acode_entity` (
   `acode_id` int(11) NOT NULL,
-  `entity_id` int(11) NOT NULL,
-  PRIMARY KEY (`acode_id`,`entity_id`)
+  `entity_id` bigint(32) NOT NULL,
+  `entity_type` varchar(8) COLLATE latin1_general_cs NOT NULL,
+  PRIMARY KEY (`acode_id`,`entity_id`,`entity_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
-
---
--- Dumping data for table `acode_entity`
---
-
-INSERT INTO `acode_entity` (`acode_id`, `entity_id`) VALUES
-(1000, 1),
-(1000, 2),
-(1001, 3),
-(1002, 2),
-(1002, 5),
-(1003, 5),
-(1003, 6);
 
 -- --------------------------------------------------------
 
@@ -70,22 +51,77 @@ INSERT INTO `acode_entity` (`acode_id`, `entity_id`) VALUES
 
 DROP TABLE IF EXISTS `entity`;
 CREATE TABLE IF NOT EXISTS `entity` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(32) NOT NULL,
+  `type` varchar(8) COLLATE latin1_general_cs NOT NULL,
   `name` varchar(80) COLLATE latin1_general_cs NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=7 ;
+  `charid` varchar(40) COLLATE latin1_general_cs DEFAULT NULL,
+  PRIMARY KEY (`id`,`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `entity`
+-- Table structure for table `entity_appl`
 --
 
-INSERT INTO `entity` (`id`, `name`) VALUES
-(1, 'entity 1'),
-(2, 'entity 2'),
-(3, 'entity 3'),
-(4, 'entity 4'),
-(5, 'entity 5'),
-(6, 'entity 6');
+DROP TABLE IF EXISTS `entity_appl`;
+CREATE TABLE IF NOT EXISTS `entity_appl` (
+  `entity_id` bigint(32) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_ctx`
+--
+
+DROP TABLE IF EXISTS `entity_ctx`;
+CREATE TABLE IF NOT EXISTS `entity_ctx` (
+  `entity_id` int(11) DEFAULT NULL,
+  `parent_id` varchar(29) COLLATE latin1_general_cs DEFAULT NULL,
+  `is_parent` varchar(30) COLLATE latin1_general_cs DEFAULT NULL,
+  `group_id` int(11) DEFAULT NULL,
+  `global_order_by` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_mtyp`
+--
+
+DROP TABLE IF EXISTS `entity_mtyp`;
+CREATE TABLE IF NOT EXISTS `entity_mtyp` (
+  `entity_id` bigint(32) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_task`
+--
+
+DROP TABLE IF EXISTS `entity_task`;
+CREATE TABLE IF NOT EXISTS `entity_task` (
+  `entity_id` int(11) DEFAULT NULL,
+  `type` varchar(28) COLLATE latin1_general_cs DEFAULT NULL,
+  `meta_out_id` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entity_wfc`
+--
+
+DROP TABLE IF EXISTS `entity_wfc`;
+CREATE TABLE IF NOT EXISTS `entity_wfc` (
+  `entity_id` bigint(22) unsigned DEFAULT NULL,
+  `meta_typ_id` int(11) DEFAULT NULL,
+  `wfc_action_id` varchar(13) COLLATE latin1_general_cs DEFAULT NULL,
+  `status_id` varchar(27) COLLATE latin1_general_cs DEFAULT NULL,
+  `lev` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
 
 -- --------------------------------------------------------
 
@@ -97,18 +133,10 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(80) COLLATE latin1_general_cs NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `role`
---
-
-INSERT INTO `role` (`id`, `name`) VALUES
-(1, 'role_1'),
-(2, 'role_2'),
-(3, 'role_3'),
-(4, 'role_4');
+  `charid` varchar(40) COLLATE latin1_general_cs DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `key_UNIQUE` (`charid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=83038 ;
 
 -- --------------------------------------------------------
 
@@ -123,17 +151,18 @@ CREATE TABLE IF NOT EXISTS `role_acode` (
   PRIMARY KEY (`role_id`,`acode_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `role_acode`
+-- Table structure for table `role_role`
 --
 
-INSERT INTO `role_acode` (`role_id`, `acode_id`) VALUES
-(1, 1001),
-(1, 1002),
-(2, 1000),
-(3, 1001),
-(3, 1002),
-(4, 1003);
+DROP TABLE IF EXISTS `role_role`;
+CREATE TABLE IF NOT EXISTS `role_role` (
+  `role_1_id` int(11) NOT NULL,
+  `role_2_id` int(11) NOT NULL,
+  PRIMARY KEY (`role_1_id`,`role_2_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
 
 -- --------------------------------------------------------
 
@@ -146,17 +175,7 @@ CREATE TABLE IF NOT EXISTS `team` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(80) COLLATE latin1_general_cs NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `team`
---
-
-INSERT INTO `team` (`id`, `name`) VALUES
-(1, 'team_1'),
-(2, 'team_2'),
-(3, 'team_3'),
-(4, 'team_4');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=17504121 ;
 
 -- --------------------------------------------------------
 
@@ -171,19 +190,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(40) COLLATE latin1_general_cs NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=23 ;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`id`, `login`, `password`) VALUES
-(1, 'mrwhite', 'a11963c26efa7187c7f03fe0349ba9ed67d00c39'),
-(2, 'jess', 'a11963c26efa7187c7f03fe0349ba9ed67d00c39'),
-(3, 'deahank', 'a11963c26efa7187c7f03fe0349ba9ed67d00c39'),
-(4, 'tuco', 'a11963c26efa7187c7f03fe0349ba9ed67d00c39'),
-(21, 'saul', ''),
-(22, 'gus', '');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=83077 ;
 
 -- --------------------------------------------------------
 
@@ -197,15 +204,6 @@ CREATE TABLE IF NOT EXISTS `user_acode` (
   `acode_id` int(11) NOT NULL,
   PRIMARY KEY (`user_ver_id`,`acode_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
-
---
--- Dumping data for table `user_acode`
---
-
-INSERT INTO `user_acode` (`user_ver_id`, `acode_id`) VALUES
-(1, 1000),
-(3, 1000),
-(6, 1000);
 
 -- --------------------------------------------------------
 
@@ -231,22 +229,6 @@ CREATE TABLE IF NOT EXISTS `user_role` (
   PRIMARY KEY (`user_ver_id`,`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
 
---
--- Dumping data for table `user_role`
---
-
-INSERT INTO `user_role` (`user_ver_id`, `role_id`) VALUES
-(1, 4),
-(3, 1),
-(6, 3),
-(7, 2),
-(31, 4),
-(34, 2),
-(34, 3),
-(34, 4),
-(37, 1),
-(37, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -270,25 +252,6 @@ CREATE TABLE IF NOT EXISTS `user_team` (
   `user_ver_id` int(11) NOT NULL,
   UNIQUE KEY `idx_user_team` (`team_id`,`user_ver_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
-
---
--- Dumping data for table `user_team`
---
-
-INSERT INTO `user_team` (`team_id`, `user_ver_id`) VALUES
-(1, 2),
-(1, 6),
-(2, 2),
-(2, 6),
-(2, 31),
-(2, 34),
-(3, 1),
-(3, 4),
-(3, 7),
-(3, 31),
-(3, 34),
-(4, 1),
-(4, 7);
 
 -- --------------------------------------------------------
 
@@ -328,23 +291,7 @@ CREATE TABLE IF NOT EXISTS `user_ver` (
   `name` varchar(80) COLLATE latin1_general_cs NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=38 ;
-
---
--- Dumping data for table `user_ver`
---
-
-INSERT INTO `user_ver` (`id`, `user_id`, `name`) VALUES
-(1, 1, 'Walter White'),
-(2, 2, 'Jesse Pinkerman'),
-(3, 3, 'Hank Schrader'),
-(4, 4, 'Hector Salamanca'),
-(6, 2, 'Jesse Pinkman'),
-(7, 4, 'Tuco Salamanca'),
-(31, 21, 'Saul Goodman'),
-(34, 21, 'Saul Goodman'),
-(35, 22, 'Gus Fring'),
-(37, 22, 'Gus Fring');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs AUTO_INCREMENT=4133 ;
 
 -- --------------------------------------------------------
 
