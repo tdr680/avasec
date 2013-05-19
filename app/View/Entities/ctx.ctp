@@ -1,21 +1,27 @@
 <!-- <div class="entities index"> -->
-	<h2><?php echo __('Entities'); ?></h2>
+	<h2><?php echo __('CTX actions'); ?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('type'); ?></th>
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
 			<th><?php echo $this->Paginator->sort('charid'); ?></th>
+			<th><?php echo $this->Paginator->sort('parent_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('is_parent'); ?></th>
+			<th><?php echo $this->Paginator->sort('group_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('glogal_order_by'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($entities as $entity): ?>
 	<tr>
-		<td><?php echo h($entity['Entity']['id']); ?>&nbsp;</td>
-		<td><?php echo h($entity['Entity']['type']); ?>&nbsp;</td>
-		<td><?php echo h($entity['Entity']['name']); ?>&nbsp;</td>
-		<td><?php echo h($entity['Entity']['charid']); ?>&nbsp;</td>
+		<td><?php echo h($entity['EntityCtx']['id']); ?>&nbsp;</td>
+		<td><?php echo h($entity['EntityCtx']['name']); ?>&nbsp;</td>
+		<td><?php echo h($entity['EntityCtx']['charid']); ?>&nbsp;</td>
+		<td><?php echo h($entity['EntityCtx']['parent_id']); ?>&nbsp;</td>
+		<td><?php echo h($entity['EntityCtx']['is_parent']); ?>&nbsp;</td>
+		<td><?php echo h($entity['EntityCtx']['group_id']); ?>&nbsp;</td>
+		<td><?php echo h($entity['EntityCtx']['global_order_by']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $entity['Entity']['id'], strtolower($entity['Entity']['type']))); ?>
+			<?php echo $this->Html->link(__('View'), array('action' => 'view', $entity['EntityCtx']['id'], 'ctx')); ?>
 			<!-- <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $entity['Entity']['id'])); ?> -->
 			<!-- <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $entity['Entity']['id']), null, __('Are you sure you want to delete # %s?', $entity['Entity']['id'])); ?> -->
 		</td>

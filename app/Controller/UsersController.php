@@ -10,7 +10,10 @@ class UsersController extends AppController {
   public $uses = array('User', 'UserMod', 'UserVer', 'Team', 'UserTeam', 'Role', 'UserRole');
   
   public function index() {
-    $this->set('users', $this->User->find('all'));
+    // $this->set('users', $this->User->find('all'));
+    $this->User->recursive = 0;
+    $this->set('users', $this->paginate());
+
   }
   
   public function view($id = null) {

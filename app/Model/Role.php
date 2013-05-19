@@ -22,7 +22,22 @@ class Role extends AppModel {
                             'finderQuery'            => '',
                             'deleteQuery'            => '',
                             'insertQuery'            => ''
-                            )
+                           ),
+          'User' => array(
+                          'className'              => 'User',
+                          'joinTable'              => 'user_role_v',
+                          'foreignKey'             => 'role_id',
+                          'associationForeignKey'  => 'user_id',
+                          'unique'                 => true,
+                          'conditions'             => '',
+                          'fields'                 => '',
+                          'order'                  => '',
+                          'limit'                  => '',
+                          'offset'                 => '',
+                          'finderQuery'            => '',
+                          'deleteQuery'            => '',
+                          'insertQuery'            => ''
+                          )
           );
 
   

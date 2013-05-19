@@ -13,3 +13,5 @@ echo $this->Html->link('entities', '/entities');
 echo $this->Html->tag('p');
 echo $this->Html->tag('p');
 echo $this->Html->link('info', '/pages/info');
+echo $this->Html->tag('br');
+echo $this->Html->link('phpinfo', '/pages/phpinfo');

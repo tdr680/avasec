@@ -33,8 +33,8 @@ $cakeDescription = __d('cake_dev', 'AvaSec');
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
-
 		echo $this->Html->css('cake.generic');
+        echo $this->Html->script('jquery');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
