@@ -23,7 +23,7 @@
 
 <script type="text/javascript">
    $(document).ready(function(){
-       $.post("/avasec/ajax/test", { id:3 },
+       $.post("/avasec/ajax/test", { id:8447224 },
               function(data,status){
                 alert("Data: " + data + "\nStatus: " + status);
               });

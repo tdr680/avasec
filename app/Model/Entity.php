@@ -6,6 +6,11 @@ App::uses('AppModel', 'Model');
  */
 class Entity extends AppModel {
 
+  public $actsAs = array('Search.Searchable');
+
+  public $filterArgs = array('name'  => array('type' => 'like'));
+							 
+  
   public $hasAndBelongsToMany = 
     array(
           'Acode' => array(
