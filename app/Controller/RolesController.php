@@ -15,6 +15,7 @@ class RolesController extends AppController {
 	public function index() {
 		$this->Role->recursive = 0;
 		$this->set('roles', $this->paginate());
+        //return $this->paginate();
 	}
 
 /**

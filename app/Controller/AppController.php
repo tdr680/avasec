@@ -22,6 +22,8 @@
  */
 App::uses('Controller', 'Controller');
 
+App::import('Lib', 'DebugKit.FireCake');
+
 /**
  * Application Controller
  *
@@ -41,10 +43,58 @@ class AppController extends Controller {
           array(
                 'loginRedirect' => array('controller' => 'users', 'action' => 'index'),
                 'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home')
-                )
+                ),
+          'DiffCart'
           );
+
+  public function afterFilter() {
+    $auth = Configure::read('Auth');
+    if (is_array($auth)) {
+      if (array_key_exists('User', $auth)) {
+        firecake($auth['User']['login']);
+      }
+    } else {
+      firecake('please log in');
+    }
+
+    //firecake($this->Session->read('visited'));
+  }
   
   public function beforeFilter() {
-    $this->Auth->allow('index', 'view', 'ver', 'display');
+ 
+    /* $this->Auth->allow('index', 'view', 'ver', 'display'); */
+    $this->Auth->allow();
+
+    /* firecake($this->Session, 'AppController->Session'); */
+
+    $uri = $_SERVER['REQUEST_URI'];
+
+    /* firecake($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); */
+
+    /* http://stackoverflow.com/questions/6353778/cakephp-global-variables-in-model */
+    if ( $this->Session->check('Auth') ) {
+      $auth = $this->Session->read('Auth');
+      if (is_array($auth)) {
+        if (array_key_exists('User', $auth)) {
+          /* http://stackoverflow.com/questions/16372645/cakephp-save-objects-state */
+          Configure::write('Auth', $this->Session->read('Auth'));
+
+          /* $visited = $this->Session->read('visited'); */
+          /* if ($visited == null){ */
+          /*   $visited = array(); */
+          /* } */
+      
+          $this->DiffCart->setCart($this->Session->read('DiffCart'));
+          $this->DiffCart->add($uri, $uri);
+          /* $visited[] = $uri; */
+          /* $this->Session->write('visited', $visited); */
+          $this->Session->write('DiffCart', $this->DiffCart->getCart());
+        }
+      }
+    } else {
+      $this->DiffCart->setCart(null);
+    }
+
+    firecake($this->DiffCart->getCart(), 'DiffCart');
   }
 }

@@ -5,11 +5,14 @@ App::uses('AppController', 'Controller');
 
 class UsersController extends AppController {
 
-  public $helpers = array('Html', 'Form', 'Session');
+  public $helpers = array('Html', 'Form', 'Session', 'DiffCart');
   public $components = array('Session');
   public $uses = array('User', 'UserMod', 'UserVer', 'Team', 'UserTeam', 'Role', 'UserRole');
   
   public function index() {
+    //$this->helpers[] = 'DiffCart';
+    //firecake($this->helpers);
+
     // $this->set('users', $this->User->find('all'));
     $this->User->recursive = 0;
     $this->set('users', $this->paginate());
@@ -159,6 +162,7 @@ class UsersController extends AppController {
   }
 
   public function logout() {
+    $this->Session->write('DiffCart', null);
     $this->redirect($this->Auth->logout());
   }
 }

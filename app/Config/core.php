@@ -193,9 +193,20 @@ Configure::write('Routing.prefixes', array('admin'));
  * the cake shell command: cake schema create Sessions
  *
  */
-	Configure::write('Session', array(
-		'defaults' => 'php'
-	));
+
+/* Configure::write('Session',  */
+/*                  array( */
+/*                        'defaults' => 'php' */
+/*                        )); */
+
+/* http://stackoverflow.com/questions/10697456/storing-session-in-database-with-cakephp-2-0 */
+Configure::write('Session', 
+                 array(
+                       'defaults' => 'database',
+                       'handler' => array(
+                                          'model' => 'sessions'
+                                          )
+                       ));
 
 /**
  * A random string used in security hashing methods.
