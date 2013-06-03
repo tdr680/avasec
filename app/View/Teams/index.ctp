@@ -1,47 +1,44 @@
-<!-- File: /app/View/Teams/index.ctp -->
-
-<h1>Teams</h1>
-<table>
-  <tr>
-    <th>Id</th>
-    <th>Name</th>
-  </tr>
-
-  <!-- Here is where we loop through our $teams array, printing out team info -->
-
-  <?php foreach ($teams as $team): ?>
-  <tr>
-    <td><?php echo $team['Team']['id']; ?></td>
-    <td class="row">
-    <?php echo $this->Html->link($team['Team']['name'],
-    array('controller'=>'teams', 'action'=>'view', $team['Team']['id'])); ?>
-    </td>
-  </tr>
-  <?php endforeach; ?>
-  <?php unset($team); ?>
-</table>
-
-<script type="text/javascript">
-   $(document).ready(function(){
-       $.post("/avasec/ajax/test", { id:8447224 },
-              function(data,status){
-                alert("Data: " + data + "\nStatus: " + status);
-              });
-     });
-
-$(document).ready(function(){
-    $(".row").hover(function(){
-        console.log("You entered row");
-      },
-      function(){
-        console.log("Bye!");
-      }); 
-  });
-
-</script>
-
-<?php
-App::import('Lib', 'DebugKit.FireCake');
-firecake($teams);
-//echo $this->Html->tag('pre'); print_r($teams);
-
+<div class="teams index">
+	<h2><?php echo __('Teams'); ?></h2>
+	<table cellpadding="0" cellspacing="0">
+	<tr>
+			<th><?php echo $this->Paginator->sort('id'); ?></th>
+			<th><?php echo $this->Paginator->sort('extid'); ?></th>
+			<th><?php echo $this->Paginator->sort('name'); ?></th>
+			<th class="actions"><?php echo __('Actions'); ?></th>
+	</tr>
+	<?php foreach ($teams as $team): ?>
+	<tr>
+		<td><?php echo h($team['Team']['id']); ?>&nbsp;</td>
+		<td><?php echo h($team['Team']['extid']); ?>&nbsp;</td>
+		<td><?php echo h($team['Team']['name']); ?>&nbsp;</td>
+		<td class="actions">
+			<?php echo $this->Html->link(__('View'), array('action' => 'view', $team['Team']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $team['Team']['id'])); ?>
+			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $team['Team']['id']), null, __('Are you sure you want to delete # %s?', $team['Team']['id'])); ?>
+		</td>
+	</tr>
+<?php endforeach; ?>
+	</table>
+	<p>
+	<?php
+	echo $this->Paginator->counter(array(
+	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+	));
+	?>	</p>
+	<div class="paging">
+	<?php
+		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+		echo $this->Paginator->numbers(array('separator' => ''));
+		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+	?>
+	</div>
+</div>
+<div class="actions">
+	<h3><?php echo __('Actions'); ?></h3>
+	<ul>
+		<li><?php echo $this->Html->link(__('New Team'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+	</ul>
+</div>

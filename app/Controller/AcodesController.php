@@ -49,7 +49,8 @@ class AcodesController extends AppController {
 		}
 		$entities = $this->Acode->Entity->find('list');
 		$roles = $this->Acode->Role->find('list');
-		$this->set(compact('entities', 'roles'));
+		$users = $this->Acode->User->find('list');
+		$this->set(compact('entities', 'roles', 'users'));
 	}
 
 /**
@@ -76,7 +77,8 @@ class AcodesController extends AppController {
 		}
 		$entities = $this->Acode->Entity->find('list');
 		$roles = $this->Acode->Role->find('list');
-		$this->set(compact('entities', 'roles'));
+		$users = $this->Acode->User->find('list');
+		$this->set(compact('entities', 'roles', 'users'));
 	}
 
 /**

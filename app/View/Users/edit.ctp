@@ -1,36 +1,30 @@
-<!-- File: /app/View/Users/edit.ctp -->
+<div class="users form">
+<?php echo $this->Form->create('User'); ?>
+	<fieldset>
+		<legend><?php echo __('Edit User'); ?></legend>
+	<?php
+		echo $this->Form->input('id');
+		echo $this->Form->input('extid');
+		echo $this->Form->input('username');
+		echo $this->Form->input('password');
+		echo $this->Form->input('Acode');
+		echo $this->Form->input('Role');
+		echo $this->Form->input('Team');
+	?>
+	</fieldset>
+<?php echo $this->Form->end(__('Submit')); ?>
+</div>
+<div class="actions">
+	<h3><?php echo __('Actions'); ?></h3>
+	<ul>
 
-<h1>Edit User</h1>
-<?php
-App::import('Lib', 'DebugKit.FireCake');
-firecake($user);
-
-echo $this->Form->create('User');
-echo $user['User']['id']    .'</br>';
-echo $user['User']['login'] .'</br>';
-echo $user['User']['name']  .'</br>';
-echo $this->Form->input('name', array('default' => $user['User']['name']));
-
-//echo $this->Form->checkbox('jinej_input');
-
-$selected_team = array();
-foreach ($user['Team'] as $tid) {
-  $selected_team[] = $tid['id'];
-}
-echo $this->Form->input('Team', array('type'      => 'select', 
-                                      'multiple'  => 'checkbox',
-                                      'selected'  => $selected_team
-));
-
-$selected_role = array();
-foreach ($user['Role'] as $rid) {
-  $selected_role[] = $rid['id'];
-}
-echo $this->Form->input('Role', array('type'      => 'select', 
-                                      'multiple'  => 'checkbox',
-                                      'selected'  => $selected_role
-));
-
-echo $this->Form->end('Save User');
-?>
-
+		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('User.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('User.id'))); ?></li>
+		<li><?php echo $this->Html->link(__('List Users'), array('action' => 'index')); ?></li>
+		<li><?php echo $this->Html->link(__('List Acodes'), array('controller' => 'acodes', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Acode'), array('controller' => 'acodes', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Roles'), array('controller' => 'roles', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Role'), array('controller' => 'roles', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Teams'), array('controller' => 'teams', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Team'), array('controller' => 'teams', 'action' => 'add')); ?> </li>
+	</ul>
+</div>

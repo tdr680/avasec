@@ -47,5 +47,6 @@
 
 <?php
 App::import('Lib', 'DebugKit.FireCake');
-firecake($entities);
-//echo $this->Html->tag('pre'); print_r($users);
+/* firecake($entities); */
+firecake($this->Session);
+/* firecake($this->Session->read('Auth')); */

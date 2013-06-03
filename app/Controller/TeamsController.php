@@ -2,74 +2,107 @@
 App::import('Lib', 'DebugKit.FireCake');
 
 App::uses('AppController', 'Controller');
-
+/**
+ * Teams Controller
+ *
+ * @property Team $Team
+ */
 class TeamsController extends AppController {
 
-  public $helpers = array('Html', 'Form', 'Session');
-  public $components = array('Session');
-  public $uses = array('Team');
-  
-  public function index() {
-    $this->set('teams', $this->Team->find('all'));
+/**
+ * index method
+ *
+ * @return void
+ */
+	public function index() {
+		$this->Team->recursive = 0;
+		$this->set('teams', $this->paginate());
+	}
 
-  }
+/**
+ * view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function view($id = null) {
+		if (!$this->Team->exists($id)) {
+			throw new NotFoundException(__('Invalid team'));
+		}
+		$options = array('conditions' => array('Team.' . $this->Team->primaryKey => $id));
+		$this->set('team', $this->Team->find('first', $options));
+	}
 
-  public function view($id = null) {
-    if (!$id) {
-      throw new NotFoundException(__('Invalid team'));
-    }
+/**
+ * add method
+ *
+ * @return void
+ */
+	public function add() {
+      $data = $this->request->data;
+      // firecake($data);
+      // pr($data);
+      // debug($this->request->data);
 
-    $team = $this->Team->findById($id);
-    if (!$team) {
-      throw new NotFoundException(__('Invalid team'));
-    }
-    $this->set('team', $team);
-  }  
+		if ($this->request->is('post')) {
+			$this->Team->create();
+			if ($this->Team->save($this->request->data)) {
+				$this->Session->setFlash(__('The team has been saved'));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The team could not be saved. Please, try again.'));
+			}
+		}
+		$users = $this->Team->User->find('list');
+		$this->set(compact('users'));
+	}
 
-  public function add() {
-    $data = $this->request->data;
-    // firecake($data);
-    // pr($data);
-    // debug($this->request->data);
+/**
+ * edit method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function edit($id = null) {
+		if (!$this->Team->exists($id)) {
+			throw new NotFoundException(__('Invalid team'));
+		}
+		if ($this->request->is('post') || $this->request->is('put')) {
+			if ($this->Team->save($this->request->data)) {
+				$this->Session->setFlash(__('The team has been saved'));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The team could not be saved. Please, try again.'));
+			}
+		} else {
+			$options = array('conditions' => array('Team.' . $this->Team->primaryKey => $id));
+			$this->request->data = $this->Team->find('first', $options);
+		}
+		$users = $this->Team->User->find('list');
+		$this->set(compact('users'));
+	}
 
-    if ($this->request->is('post')) {
-      $this->Team->create();
-      if ($this->Team->save($data)) {
-        $this->Session->setFlash('Team has been saved.');
-      } else {
-        $this->Session->setFlash('Unable to add the team.');
-      }
-    }
-  }
-
-  public function edit($id = null) {
-    if (!$id) {
-      throw new NotFoundException(__('Invalid team'));
-    }
-
-    $team = $this->Team->findById($id);
-
-    if (!$team) {
-      throw new NotFoundException(__('Invalid team'));
-    }
-
-    // firecake($team);
-
-    if ($this->request->is('post') || $this->request->is('put')) {
-      firecake($this->request);
-
-      $this->Team->id = $id;
-
-      if ($this->Team->save($this->request->data)) {
-        $this->Session->setFlash('Team has been updated.');
-        $this->redirect(array('action'=>'index'));
-      } else {
-        $this->Session->setFlash('Unable to update team.');
-      }
-    }
-    
-    if (!$this->request->data) {
-      $this->request->data = $team;
-    }
-  }
+/**
+ * delete method
+ *
+ * @throws NotFoundException
+ * @throws MethodNotAllowedException
+ * @param string $id
+ * @return void
+ */
+	public function delete($id = null) {
+		$this->Team->id = $id;
+		if (!$this->Team->exists()) {
+			throw new NotFoundException(__('Invalid team'));
+		}
+		$this->request->onlyAllow('post', 'delete');
+		if ($this->Team->delete()) {
+			$this->Session->setFlash(__('Team deleted'));
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->Session->setFlash(__('Team was not deleted'));
+		$this->redirect(array('action' => 'index'));
+	}
 }

@@ -15,7 +15,6 @@ class RolesController extends AppController {
 	public function index() {
 		$this->Role->recursive = 0;
 		$this->set('roles', $this->paginate());
-        //return $this->paginate();
 	}
 
 /**
@@ -49,7 +48,9 @@ class RolesController extends AppController {
 			}
 		}
 		$acodes = $this->Role->Acode->find('list');
-		$this->set(compact('acodes'));
+		$roles = $this->Role->Role->find('list');
+		$users = $this->Role->User->find('list');
+		$this->set(compact('acodes', 'roles', 'users'));
 	}
 
 /**
@@ -75,7 +76,9 @@ class RolesController extends AppController {
 			$this->request->data = $this->Role->find('first', $options);
 		}
 		$acodes = $this->Role->Acode->find('list');
-		$this->set(compact('acodes'));
+		$roles = $this->Role->Role->find('list');
+		$users = $this->Role->User->find('list');
+		$this->set(compact('acodes', 'roles', 'users'));
 	}
 
 /**
