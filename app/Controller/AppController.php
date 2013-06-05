@@ -51,7 +51,7 @@ class AppController extends Controller {
     $auth = Configure::read('Auth');
     if (is_array($auth)) {
       if (array_key_exists('User', $auth)) {
-        firecake($auth['User']['login']);
+        firecake($auth['User']['username']);
       }
     } else {
       firecake('please log in');
@@ -63,7 +63,8 @@ class AppController extends Controller {
   public function beforeFilter() {
  
     /* $this->Auth->allow('index', 'view', 'ver', 'display'); */
-    $this->Auth->allow();
+    /* $this->Auth->allow(); */
+    $this->Auth->deny();
 
     /* firecake($this->Session, 'AppController->Session'); */
 

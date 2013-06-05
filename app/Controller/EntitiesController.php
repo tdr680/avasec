@@ -16,21 +16,18 @@ class EntitiesController extends AppController {
   public $uses = array('Entity', 'EntityTask', 'EntityMtyp', 'EntityWfc', 'EntityCtx', 'EntityAppl');
   public $paginate = array();
 
-  public function find() {
-	$this->Prg->commonProcess();
-	$this->paginate['conditions'] = $this->Entity->parseCriteria($this->passedArgs);
-
-	$this->set('entities', $this->paginate());
-  }
-
 /**
  * index method
  *
  * @return void
  */
 	public function index() {
-		$this->Entity->recursive = 0;
-		$this->set('entities', $this->paginate());
+      $this->Entity->recursive = 0;
+
+      $this->Prg->commonProcess();
+      $this->paginate['conditions'] = $this->Entity->parseCriteria($this->passedArgs);
+      
+      $this->set('entities', $this->paginate());
 	}
 
 /**

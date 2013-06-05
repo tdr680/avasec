@@ -1,5 +1,13 @@
 <!-- <div class="entities index"> -->
 	<h2><?php echo __('Entities'); ?></h2>
+
+<?php
+echo $this->Form->create('Entity', array('url' => array_merge(array('action' => 'index'), $this->params['pass'])));
+echo $this->Form->input('name', array('div' => false));
+echo $this->Form->submit(__('Search'), array('div' => false));
+echo $this->Form->end();
+?>
+
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>

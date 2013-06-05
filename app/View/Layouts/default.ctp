@@ -44,7 +44,14 @@ $cakeDescription = __d('cake_dev', 'AvaSec');
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, '/'); ?></h1>
+			<h1>
+              <?php echo $this->Html->link($cakeDescription,    '/'         ); ?>
+              <?php echo $this->Html->link(' / Teams',          '/teams'    ); ?>
+              <?php echo $this->Html->link(' / Users',          '/users'    ); ?>
+              <?php echo $this->Html->link(' / Roles',          '/roles'    ); ?>
+              <?php echo $this->Html->link(' / Access codes',   '/acodes'   ); ?>
+              <?php echo $this->Html->link(' / Entities',       '/entities' ); ?>
+            </h1>
 		</div>
 		<div id="content">
 
