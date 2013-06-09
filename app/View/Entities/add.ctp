@@ -3,6 +3,9 @@
 	<fieldset>
 		<legend><?php echo __('Add Entity'); ?></legend>
 	<?php
+		echo $this->Form->input('type');
+		echo $this->Form->input('extid');
+		echo $this->Form->input('charid');
 		echo $this->Form->input('name');
 		echo $this->Form->input('Acode');
 	?>

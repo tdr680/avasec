@@ -33,10 +33,10 @@ class Entity extends AppModel {
 	public $validate = array(
 		'type' => array(
 			'inlist' => array(
-				'rule' => array('inlist'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
+                'rule' => array('inlist', array('APPL','TASK','WFC','MTYP','CTX')),
+				'message' => 'Please provide entity type: APPL, TASK, WFC, MTYP or CTX',
+				'allowEmpty' => false,
+				'required' => true,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
