@@ -41,7 +41,7 @@ class Role extends AppModel {
 		),
 		'charid' => array(
 			'alphanumeric' => array(
-				'rule' => array('alphanumeric'),
+				'rule' => array('custom', '/[\w+]/'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -51,7 +51,7 @@ class Role extends AppModel {
 		),
 		'name' => array(
 			'alphanumeric' => array(
-				'rule' => array('alphanumeric'),
+				'rule' => array('custom', '/[\w+]/'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -84,7 +84,22 @@ class Role extends AppModel {
 			'deleteQuery' => '',
 			'insertQuery' => ''
 		),
-		'Role' => array(
+		'ParentRole' => array(
+			'className' => 'Role',
+			'joinTable' => 'role_role',
+			'foreignKey' => 'role_2_id',
+			'associationForeignKey' => 'role_1_id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+			'deleteQuery' => '',
+			'insertQuery' => ''
+		),
+		'ChildRole' => array(
 			'className' => 'Role',
 			'joinTable' => 'role_role',
 			'foreignKey' => 'role_1_id',

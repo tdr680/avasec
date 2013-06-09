@@ -37,7 +37,6 @@
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('Extid'); ?></th>
 		<th><?php echo __('Username'); ?></th>
-		<th><?php echo __('Password'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php
@@ -47,7 +46,6 @@
 			<td><?php echo $user['id']; ?></td>
 			<td><?php echo $user['extid']; ?></td>
 			<td><?php echo $user['username']; ?></td>
-			<td><?php echo $user['password']; ?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), array('controller' => 'users', 'action' => 'view', $user['id'])); ?>
 				<?php echo $this->Html->link(__('Edit'), array('controller' => 'users', 'action' => 'edit', $user['id'])); ?>

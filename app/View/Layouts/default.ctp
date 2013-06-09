@@ -51,6 +51,11 @@ $cakeDescription = __d('cake_dev', 'AvaSec');
               <?php echo $this->Html->link(' / Roles',          '/roles'    ); ?>
               <?php echo $this->Html->link(' / Access codes',   '/acodes'   ); ?>
               <?php echo $this->Html->link(' / Entities',       '/entities' ); ?>
+              <?php echo $this->Html->link(' ( Applications',   '/entities/appl' ); ?>
+              <?php echo $this->Html->link(' / Meta types',     '/entities/mtyp' ); ?>
+              <?php echo $this->Html->link(' / Tasks',          '/entities/task' ); ?>
+              <?php echo $this->Html->link(' / Workflows',      '/entities/wfc'  ); ?>
+              <?php echo $this->Html->link(' / Ctx actions )',  '/entities/ctx'  ); ?>
             </h1>
 		</div>
 		<div id="content">

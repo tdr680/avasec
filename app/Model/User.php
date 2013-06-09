@@ -31,7 +31,7 @@ class User extends AppModel {
 	public $validate = array(
 		'extid' => array(
 			'numeric' => array(
-				'rule' => array('numeric'),
+				'rule' => array('custom', '/[\w+]/'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -41,7 +41,7 @@ class User extends AppModel {
 		),
 		'username' => array(
 			'alphanumeric' => array(
-				'rule' => array('alphanumeric'),
+				'rule' => array('custom', '/[\w+]/'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -51,9 +51,9 @@ class User extends AppModel {
 		),
 		'password' => array(
 			'alphanumeric' => array(
-				'rule' => array('alphanumeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
+				'rule' => array('custom', '/[\w+]/'),
+				'message' => 'Please provide your password',
+				'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
@@ -116,4 +116,10 @@ class User extends AppModel {
 		)
 	);
 
+    public function beforeSave($options = array()) {
+      if (isset($this->data[$this->alias]['password'])) {
+        $this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
+      }
+      return true;
+    }
 }

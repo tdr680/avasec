@@ -38,21 +38,24 @@ class EntitiesController extends AppController {
  * @return void
  */
 	public function view($id = null) {
-      if (!isset($this->request->pass[1])) {
-        throw new NotFoundException(__('Missing entity type'));
-      }
+      /* if (!isset($this->request->pass[1])) { */
+      /*   throw new NotFoundException(__('Missing entity type')); */
+      /* } */
 
-      $e_type = strtolower($this->request->pass[1]);
-      // if not set then error
+      /* $e_type = strtolower($this->request->pass[1]); */
+      /* // if not set then error */
 
-      if (!$this->Entity->exists($id)) {
-        throw new NotFoundException(__('Invalid entity'));
-      }
+      /* if (!$this->Entity->exists($id)) { */
+      /*   throw new NotFoundException(__('Invalid entity')); */
+      /* } */
 
-      $options = array('conditions' => array('AND' => array(
-                                                            array('Entity.'.$this->Entity->primaryKey => $id),
-                                                            array('Entity.type'                       => $e_type))));
-      $e = $this->Entity->find('first', $options);
+      /* $options = array('conditions' => array('AND' => array( */
+      /*                                                       array('Entity.'.$this->Entity->primaryKey => $id), */
+      /*                                                       array('Entity.type'                       => $e_type)))); */
+      /* $e = $this->Entity->find('first', $options); */
+
+      $e = $this->Entity->findById($id);
+      $e_type = strtolower($e['Entity']['type']);
 
       $e_name = 'Entity'.ucfirst($e_type);
       if (!isset($this->$e_name)) {
@@ -204,7 +207,7 @@ class EntitiesController extends AppController {
         $this->paginate = array('conditions' => array('meta_typ_id =' => $mt));
       }
 
-      //$this->EntityWfc->recursive = 0;
+      $this->EntityWfc->recursive = 0;
       //firecake($this->paginate('EntityWfc'));
       $this->set('entities', $this->paginate('EntityWfc'));
 	}
@@ -215,8 +218,11 @@ class EntitiesController extends AppController {
  * @return void
  */
 	public function ctx() {
-
       $this->EntityCtx->recursive = 0;
+
+      $this->Prg->commonProcess();
+      $this->paginate['conditions'] = $this->EntityCtx->parseCriteria($this->passedArgs);
+
       $this->set('entities', $this->paginate('EntityCtx'));
 	}
 }

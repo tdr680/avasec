@@ -10,9 +10,9 @@ class EntityWfc extends Entity {
 
   public $belongsTo = array(
                             'Mtyp' => array(
-                                            'className'              => 'EntityMtyp',
-                                            'foreignKey'             => 'meta_typ_id',
-                                            'associationForeignKey'  => 'id'
+                                            'className'   => 'EntityMtyp',
+                                            'foreignKey'  => false,
+                                            'conditions'  => array('EntityWfc.meta_typ_id = Mtyp.extid')
                                             )
                             );
 

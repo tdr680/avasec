@@ -41,7 +41,7 @@ class Acode extends AppModel {
 		),
 		'charid' => array(
 			'alphanumeric' => array(
-				'rule' => array('alphanumeric'),
+				'rule' => array('custom', '/[\w+]/'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -51,7 +51,7 @@ class Acode extends AppModel {
 		),
 		'name' => array(
 			'alphanumeric' => array(
-				'rule' => array('alphanumeric'),
+				'rule' => array('custom', '/[\w+]/'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,

@@ -74,8 +74,8 @@
 	</div>
 </div>
 <div class="related">
-	<h3><?php echo __('Related Roles'); ?></h3>
-	<?php if (!empty($role['Role'])): ?>
+	<h3><?php echo __('Related Roles (parent)'); ?></h3>
+	<?php if (!empty($role['ParentRole'])): ?>
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
 		<th><?php echo __('Id'); ?></th>
@@ -86,16 +86,51 @@
 	</tr>
 	<?php
 		$i = 0;
-		foreach ($role['Role'] as $role): ?>
+		foreach ($role['ParentRole'] as $r): ?>
 		<tr>
-			<td><?php echo $role['id']; ?></td>
-			<td><?php echo $role['extid']; ?></td>
-			<td><?php echo $role['charid']; ?></td>
-			<td><?php echo $role['name']; ?></td>
+			<td><?php echo $r['id']; ?></td>
+			<td><?php echo $r['extid']; ?></td>
+			<td><?php echo $r['charid']; ?></td>
+			<td><?php echo $r['name']; ?></td>
 			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'roles', 'action' => 'view', $role['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'roles', 'action' => 'edit', $role['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'roles', 'action' => 'delete', $role['id']), null, __('Are you sure you want to delete # %s?', $role['id'])); ?>
+				<?php echo $this->Html->link(__('View'), array('controller' => 'roles', 'action' => 'view', $r['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'roles', 'action' => 'edit', $r['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'roles', 'action' => 'delete', $r['id']), null, __('Are you sure you want to delete # %s?', $r['id'])); ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+<?php endif; ?>
+
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Html->link(__('New Role'), array('controller' => 'roles', 'action' => 'add')); ?> </li>
+		</ul>
+	</div>
+</div>
+<div class="related">
+	<h3><?php echo __('Related Roles (child)'); ?></h3>
+	<?php if (!empty($role['ChildRole'])): ?>
+	<table cellpadding = "0" cellspacing = "0">
+	<tr>
+		<th><?php echo __('Id'); ?></th>
+		<th><?php echo __('Extid'); ?></th>
+		<th><?php echo __('Charid'); ?></th>
+		<th><?php echo __('Name'); ?></th>
+		<th class="actions"><?php echo __('Actions'); ?></th>
+	</tr>
+	<?php
+		$i = 0;
+		foreach ($role['ChildRole'] as $r): ?>
+		<tr>
+			<td><?php echo $r['id']; ?></td>
+			<td><?php echo $r['extid']; ?></td>
+			<td><?php echo $r['charid']; ?></td>
+			<td><?php echo $r['name']; ?></td>
+			<td class="actions">
+				<?php echo $this->Html->link(__('View'), array('controller' => 'roles', 'action' => 'view', $r['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'roles', 'action' => 'edit', $r['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'roles', 'action' => 'delete', $r['id']), null, __('Are you sure you want to delete # %s?', $r['id'])); ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>
@@ -116,7 +151,6 @@
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('Extid'); ?></th>
 		<th><?php echo __('Username'); ?></th>
-		<th><?php echo __('Password'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php
@@ -126,7 +160,6 @@
 			<td><?php echo $user['id']; ?></td>
 			<td><?php echo $user['extid']; ?></td>
 			<td><?php echo $user['username']; ?></td>
-			<td><?php echo $user['password']; ?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), array('controller' => 'users', 'action' => 'view', $user['id'])); ?>
 				<?php echo $this->Html->link(__('Edit'), array('controller' => 'users', 'action' => 'edit', $user['id'])); ?>
@@ -143,3 +176,7 @@
 		</ul>
 	</div>
 </div>
+
+<?php
+App::import('Lib', 'DebugKit.FireCake');
+firecake($role['Role'], '$role');

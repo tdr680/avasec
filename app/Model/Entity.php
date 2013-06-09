@@ -53,7 +53,7 @@ class Entity extends AppModel {
 		),
 		'charid' => array(
 			'alphanumeric' => array(
-				'rule' => array('alphanumeric'),
+				'rule' => array('custom', '/[\w+]/'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
