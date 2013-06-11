@@ -76,7 +76,7 @@ class RolesController extends AppController {
 			$this->request->data = $this->Role->find('first', $options);
 		}
 		$acodes = $this->Role->Acode->find('list');
-		$roles = $this->Role->Role->find('list');
+		$roles = $this->Role->ParentRole->find('list');
 		$users = $this->Role->User->find('list');
 		$this->set(compact('acodes', 'roles', 'users'));
 	}
